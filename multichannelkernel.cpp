@@ -15,9 +15,9 @@ MultiChannelKernel::MultiChannelKernel()
 
 MultiChannelKernel::~MultiChannelKernel()
 {
-    delete []redKernel;
-    delete []greenKernel;
-    delete []blueKernel;
+//    delete []redKernel;
+//    delete []greenKernel;
+//    delete []blueKernel;
 }
 
 MultiChannelKernel::MultiChannelKernel(double *redKernel, double *greenKernel, double *blueKernel)
@@ -44,26 +44,31 @@ void MultiChannelKernel::setKernelCoefficients(double redKernelCoefficient, doub
 void MultiChannelKernel::convolution(BYTE *inputImg, unsigned int width, unsigned height)
 {
     unsigned int center;
-    BYTE *result = new BYTE[(width-2)*(height-2)];
-    unsigned int red=0,green=0,blue=0;
+    BYTE *result = new BYTE[(width-2)*(height-2)*3];
+    int red=0,green=0,blue=0;
 
-    for (unsigned int i = 0; i < (height-kernelSize)+1; i+=3)
+    for (unsigned int i = 0; i < 3*(height-kernelSize)+3; i+=3)
         {
-            for (unsigned int j = 0; j < (width-kernelSize)+1; j+=3)
+            for (unsigned int j = 0; j < 3*(width-kernelSize)+3; j+=3)
             {
                 for(unsigned int k = 0; k< kernelSize; k++)
                 {
                     for(unsigned int h = 0; h< kernelSize; h++)
                     {
-                        red   +=   inputImg[(i * width + j) + (k * width +h)] * redKernel[k * kernelSize +h];
-                        green +=   inputImg[(i * width + j) + (k * width +h) + 1] * greenKernel[k * kernelSize +h];
-                        blue  +=   inputImg[(i * width + j) + (k * width +h) + 2] * blueKernel[k * kernelSize +h];
+                        int a =(i * width + j) + (k * width +(3*h));
+                        int b =(i * width + j) + (k * width +(3*h)+1);
+                        int c =(i * width + j) + (k * width +(3*h)+2);
+
+                        red   +=   inputImg[(i * width + j) + (k * width +(3*h))] * redKernel[k * kernelSize +h];
+                        green +=   inputImg[(i * width + j) + (k * width +(3*h)) + 1] * greenKernel[k * kernelSize +h];
+                        blue  +=   inputImg[(i * width + j) + (k * width +(3*h)) + 2] * blueKernel[k * kernelSize +h];
                     }
                 }
                 center = (i*(width-2)+j);
                 result[center] = redKernelCoefficient * red;
                 result[center + 1] = blueKernelCoefficient * blue;
                 result[center + 2] = greenKernelCoefficient * green;
+                red=0; green=0; blue=0;
 
             }
 
