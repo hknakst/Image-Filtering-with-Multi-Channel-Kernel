@@ -21,7 +21,7 @@ public:
     MultiChannelKernel(double *redKernel, double *greenKernel, double *blueKernel);
     void setMultiChannelKernel( double *redKernel, double *greenKernel, double *blueKernel);
     void setKernelCoefficients(double redKernelCoefficient,double greenKernelCoefficient,double blueKernelCoefficient);
-    void convolution(BYTE *inputImg, unsigned int width, unsigned height);
+    BYTE* convolution(BYTE *inputImg, unsigned int width, unsigned height);
 
 
 };
