@@ -58,7 +58,7 @@ BYTE* MultiChannelKernel::convolution(BYTE *inputImg, unsigned int width, unsign
                         red   +=   inputImg[(i * width + j) + (3 * k * width +(3*h))] * redKernel[k * kernelSize +h];
                         green +=   inputImg[(i * width + j) + (3 * k * width +(3*h)) + 1] * greenKernel[k * kernelSize +h];
                         blue  +=   inputImg[(i * width + j) + (3 * k * width +(3*h)) + 2] * blueKernel[k * kernelSize +h];
-                        if(k==1 && h==1)
+                        if(k==kernelSize/2 && h==kernelSize/2)
                             center = (i * width + j) + (3*k * width +(3*h));
                     }
                 }
@@ -70,17 +70,7 @@ BYTE* MultiChannelKernel::convolution(BYTE *inputImg, unsigned int width, unsign
             }
         }
 
-//    for(int i=0; i<3*height; i+=3)
-//    {
-//        for(int j=0; j<3*(width); j+=3)
-//        {
-//            center = (i*(width)+j);
-//            result[center] = 255;
-//            result[center + 1] = 0;
-//            result[center + 2] = 0;
-//        }
 
-//}
     return result;
 
 }
@@ -88,11 +78,6 @@ BYTE* MultiChannelKernel::convolution(BYTE *inputImg, unsigned int width, unsign
 
 
 
-
-//                center = (i*width + j);
-//                result[center] = (inputImg[(center - width -1)] + inputImg[(center - width)] + inputImg[(center - width +1)]
-//                         + inputImg[(center - 1)] + inputImg[center] + inputImg[(center + 1)]
-//                         + inputImg[(center + width - 1)] + inputImg[(center + width)] + inputImg[(center + width + 1)]);
 
 
 
