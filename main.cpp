@@ -1,10 +1,6 @@
 #include <iostream>
 #include "multichannelkernel.h"
-#include <QCoreApplication>
-#include <QtCore>
 #include <QtGui/QImage>
-#include <QtGui/QPixmap>
-
 
 int main()
 {
